@@ -112,15 +112,29 @@
     },
   };
   let currentBoard = currentTasks.length ? tasks[currentTasks[currentTasks.length - 1]] : mb;
+
+  const colors = [
+    '#a5e5fa',
+    '#f2d7f0',
+    '#fae0b7',
+    '#f8e5a8',
+    '#e0ebca',
+    '#aeeaea',
+  ];
   
 </script>
 
 <main>
   <div id="main">
     <div class="container">
-      <h1>Main board</h1>
-      {#each currentTasks as currentTaskId}
-        <div class="current-task">
+      <h1>
+        Project
+      </h1>
+      {#each currentTasks as currentTaskId, i}
+        <div
+          style="background-color: {colors[(i + 1) % colors.length]}"
+          class="current-task"
+        >
           <Button
             outline color="primary" size="sm"
             on:click={() => removeCurrentTask(currentTaskId)}
@@ -130,7 +144,10 @@
           <span class="current-task-title">{tasks[currentTaskId].title}</span>
         </div>
       {/each}
-      <div class="lists">
+      <div
+        style="background-color: {colors[currentTasks.length % colors.length]}"
+        class="lists"
+      >
         {#each currentBoard.lists as listId}
           <div class="list">
             <h2 class="list-title">{lists[listId].title}</h2>
@@ -191,7 +208,14 @@
     }
 
     .current-task {
-      margin: 10px 0;
+      margin: 1px 0;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .current-task:last-child {
+      border-radius: 10px 10px 0 0;
+      border: 10px solid red;
     }
 
     .lists {
@@ -200,6 +224,7 @@
     }
 
     .list {
+      background-color: white;
       border: 1px solid black;
       width: 250px;
     }
